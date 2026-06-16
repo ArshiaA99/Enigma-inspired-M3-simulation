@@ -1,3 +1,4 @@
+![Enigma M3 Simulator Banner](images/enigma-preview.png)
 # 🔐 Enigma M3 Cipher Engine
 
 A modern web-based simulation of the famous **Enigma M3 Machine**, implemented with **Python**, **FastAPI**, and a responsive browser interface.
