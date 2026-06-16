@@ -222,7 +222,7 @@ def serve_frontend():
         </main>
 
         <footer class="text-center py-4 border-t border-slate-900 text-[11px] text-slate-600 font-medium tracking-wide mono">
-            MILITARY GRADE RE-ENCAPSULATION NETWORK // 2026
+            ENIGMA M3 CIPHER SIMULATOR // 2026
         </footer>
 
         <script>
