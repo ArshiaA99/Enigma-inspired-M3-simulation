@@ -1,51 +1,186 @@
-# 🔐 Enigma Machine Simulation in Python
+# 🔐 Enigma M3 Cipher Engine
 
-This project is a simple but creative simulation of the famous **Enigma Machine** — the encryption device used by Nazi Germany during World War II.  
-It demonstrates how text can be encoded through multiple layers of rotor substitutions, a reflector, and dynamic rotor rotation — all implemented in pure Python.
+A modern web-based simulation of the famous **Enigma M3 Machine**, implemented with **Python**, **FastAPI**, and a responsive browser interface.
 
----
-
-## 🧠 What Is the Enigma Machine?
-
-The **Enigma Machine** was an electromechanical cipher device.  
-Messages were scrambled through several rotating wheels (called *rotors*) that substituted letters in complex, ever-changing ways. When the operator typed a letter:
-1. Electrical current would pass through multiple rotors.
-2. The signal would bounce off a *reflector*, ensuring reversibility (so encryption = decryption).
-3. The rotors would then shift positions after each keypress, altering the cipher dynamically.
-
-The result was an encryption system so sophisticated that it remained unbreakable for years — until the Allies cracked it with a combination of mathematics, codebreaking, and early computing.
+This project recreates the core concepts of the historical German Enigma cipher system, including multiple rotors, a reflector, rotor stepping, and a configurable plugboard. Users can encrypt and decrypt messages directly through a web interface or via a REST API.
 
 ---
 
-## 💡 What Makes This Code Special
+## 🧠 What Was the Enigma Machine?
 
-This implementation captures the **core behavior** of Enigma in a clean and fully readable Python script.
+The **Enigma Machine** was an electromechanical encryption device used extensively by German military forces during World War II.
 
-### Key Highlights
-- **Custom alphabet**:  
-  Includes the standard lowercase letters **plus the space character** — allowing the cipher to handle full sentences gracefully.
-  
-- **Three deterministic rotors**:  
-  Each rotor is created by shuffling the alphabet with different random seeds (42, 43, 44).  
-  This ensures reproducibility while maintaining uniqueness
+When an operator pressed a key:
 
-- **Reflector function: A simple yet clever mirror mechanism**:
-  Each letter is reflected through the other side of the alphabet (like how Enigma’s electrical signal was reversed back).
+1. The signal first passed through a **plugboard**, swapping selected letter pairs.
+2. It then traveled through multiple **rotors**, each performing a substitution.
+3. The signal reached a **reflector**, which redirected it back through the rotors.
+4. The output letter illuminated on the lampboard.
+5. The rotors rotated after each keypress, continuously changing the encryption pattern.
 
-- **Dynamic rotor rotation**:
-  After encrypting each character, the rotors rotate to change the substitution pattern dynamically — making the cipher state-dependent. The outer rotors rotate      less frequently, emulating Enigma’s cascading rotation mechanism.
+Because of the reflector design, the same machine configuration could both encrypt and decrypt messages.
 
-- **Self-contained encryption loop**:
-  Encrypts any given plaintext string, producing a final encoded message that changes with each run based on rotor states.
+---
 
-## How it works?
-1. Initialize the alphabet and rotors
-2. Pass each character through 3 rotor layers
-3. Apply reflector symmetry
-4. Reverse the signal through rotors
-5. Rotate rotors after each encryption step
-6. Print the resulting cipher text
+## ⚙️ Features
 
-Note: Because of the reflector’s symmetry, running the cipher again with the same rotor setup will decode the message back to the original text.
+### Historical Rotor Set
 
-Credits: Created by Arshia K ([Github: ArshiaA99](https://github.com/ArshiaA99))
+Includes the authentic Wehrmacht rotor wirings:
+
+* Rotor I
+* Rotor II
+* Rotor III
+* Rotor IV
+* Rotor V
+
+Users may select any three distinct rotors for encryption.
+
+---
+
+### Reflector B
+
+Implements the historical **Reflector B** wiring used in many Enigma configurations.
+
+---
+
+### Plugboard Support
+
+Configure custom plugboard connections such as:
+
+AB CD EF
+
+The plugboard performs substitutions both before entering and after exiting the rotor system, significantly increasing cipher complexity.
+
+---
+
+### Rotor Stepping Mechanism
+
+After each encrypted character:
+
+* Rotor I rotates every keypress.
+* Rotor II rotates after a full revolution of Rotor I.
+* Rotor III rotates after a full revolution of Rotor II.
+
+This creates a continuously changing encryption state.
+
+---
+
+### FastAPI REST API
+
+Encrypt messages programmatically through a simple JSON API.
+
+#### Endpoint
+
+POST `/api/cipher`
+
+#### Example Request
+
+```json
+{
+    "text": "HELLO WORLD",
+    "rotors": ["I", "II", "III"],
+    "plugboard": "AM FT PX"
+}
+```
+
+#### Example Response
+
+```json
+{
+    "success": true,
+    "result": "..."
+}
+```
+
+---
+
+### Modern Web Interface
+
+The project includes a responsive browser-based UI featuring:
+
+* Rotor selection controls
+* Plugboard configuration
+* Plaintext input
+* Ciphertext output
+* One-click copy functionality
+* Real-time API integration
+
+---
+
+## 🔄 Encryption and Decryption
+
+Like the original Enigma machine, encryption is symmetric.
+
+Using:
+
+* The same rotor order
+* The same plugboard configuration
+* The same starting rotor positions
+
+Running ciphertext through the machine again will reproduce the original plaintext.
+
+---
+
+## 🚀 Running the Project
+
+### Install Dependencies
+
+```bash
+pip install fastapi uvicorn pydantic
+```
+
+### Start the Server
+
+```bash
+python main.py
+```
+
+The application will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Open the URL in your browser to access the Enigma web interface.
+
+---
+
+## 🏗 Project Architecture
+
+```text
+Client Browser
+      │
+      ▼
+ FastAPI Web Server
+      │
+      ▼
+ Enigma Cipher Engine
+      │
+ ├── Plugboard
+ ├── Rotor I–V
+ ├── Reflector B
+ └── Rotor Stepping Logic
+```
+
+---
+
+## 📚 Educational Purpose
+
+This project is designed for educational and demonstration purposes.
+
+While inspired by the historical Enigma machine, it is a simplified software implementation intended to help students understand:
+
+* Classical cryptography
+* Substitution ciphers
+* Rotor-based encryption systems
+* Symmetric encryption concepts
+* API development with FastAPI
+
+---
+
+## 👨‍💻 Author
+
+**Arshia Karkhanehie**
+
+GitHub: https://github.com/ArshiaA99
